@@ -6,19 +6,19 @@ import (
 	"fmt"
 	"time"
 
-	auth2 "cxm-auth/module/auth"
+	"cxm-auth/module/auth"
 
 	"github.com/dgrijalva/jwt-go/v4"
 )
 
 type AuthUseCase struct {
-	userRepo       auth2.UserRepository
+	userRepo       auth.UserRepository
 	hashSalt       string
 	signingKey     []byte
 	expireDuration time.Duration
 }
 
-func NewAuthUseCase(userRepo auth2.UserRepository, hashSalt string, signingKey []byte, expireDuration time.Duration) *AuthUseCase {
+func NewAuthUseCase(userRepo auth.UserRepository, hashSalt string, signingKey []byte, expireDuration time.Duration) *AuthUseCase {
 	return &AuthUseCase{
 		userRepo:       userRepo,
 		hashSalt:       hashSalt,
@@ -30,7 +30,7 @@ func NewAuthUseCase(userRepo auth2.UserRepository, hashSalt string, signingKey [
 func (au *AuthUseCase) SignUp(ctx context.Context, username, password string) error {
 	user, _ := au.userRepo.GetUserByUsername(ctx, username)
 	if user != nil {
-		return auth2.ErrUserExist
+		return auth.ErrUserExist
 	}
 
 	pwd := sha1.New()
@@ -43,7 +43,7 @@ func (au *AuthUseCase) SignUp(ctx context.Context, username, password string) er
 func (au *AuthUseCase) SignIn(ctx context.Context, username, password string) (string, error) {
 	user, err := au.userRepo.GetUserByUsername(ctx, username)
 	if err != nil {
-		return "", auth2.ErrUserNotFound
+		return "", auth.ErrUserNotFound
 	}
 
 	pwd := sha1.New()
@@ -52,7 +52,7 @@ func (au *AuthUseCase) SignIn(ctx context.Context, username, password string) (s
 	password = fmt.Sprintf("%x", pwd.Sum(nil))
 
 	if password != user.Password {
-		return "", auth2.ErrPasswordNotMatch
+		return "", auth.ErrPasswordNotMatch
 	}
 
 	claims := jwt.MapClaims{
@@ -66,6 +66,6 @@ func (au *AuthUseCase) SignIn(ctx context.Context, username, password string) (s
 	return token.SignedString(au.signingKey)
 }
 
-func (au *AuthUseCase) GetUser(ctx context.Context, username string) (*auth2.User, error) {
+func (au *AuthUseCase) GetUser(ctx context.Context, username string) (*auth.User, error) {
 	return au.userRepo.GetUserByUsername(ctx, username)
 }

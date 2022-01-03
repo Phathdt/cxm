@@ -1,7 +1,7 @@
 package postgresql
 
 import (
-	"cxm-auth/auth"
+	"cxm-auth/module/auth"
 )
 
 func (u User) MapToEntity() auth.User {

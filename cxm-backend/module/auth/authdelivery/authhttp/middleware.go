@@ -1,7 +1,7 @@
 package authhttp
 
 import (
-	"cxm-auth/auth"
+	"cxm-auth/module/auth"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"

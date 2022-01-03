@@ -1,7 +1,7 @@
 package authhttp
 
 import (
-	"cxm-auth/auth"
+	"cxm-auth/module/auth"
 	"cxm-auth/utils/helper"
 
 	"github.com/go-playground/validator/v10"

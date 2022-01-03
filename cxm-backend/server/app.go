@@ -4,10 +4,10 @@ import (
 	"database/sql"
 	"fmt"
 
-	"cxm-auth/auth"
-	"cxm-auth/auth/authdelivery/authhttp"
-	"cxm-auth/auth/authrepo/authpg"
-	"cxm-auth/auth/authuc"
+	"cxm-auth/module/auth"
+	"cxm-auth/module/auth/authdelivery/authhttp"
+	"cxm-auth/module/auth/authrepo/authpg"
+	"cxm-auth/module/auth/authuc"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"

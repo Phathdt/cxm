@@ -5,9 +5,9 @@ import (
 	"fmt"
 
 	"cxm-auth/auth"
-	authhttp "cxm-auth/auth/delivery/http"
-	authrepo "cxm-auth/auth/repository/postgres"
-	authuc "cxm-auth/auth/usecase"
+	"cxm-auth/auth/authdelivery/authhttp"
+	"cxm-auth/auth/authrepo/authpg"
+	"cxm-auth/auth/authuc"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -27,7 +27,7 @@ func NewApp() (*App, error) {
 		return nil, err
 	}
 
-	authRepo := authrepo.NewUserRepository(db)
+	authRepo := authpg.NewUserRepository(db)
 
 	return &App{
 		authUC: authuc.NewAuthUseCase(
